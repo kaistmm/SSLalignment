@@ -87,6 +87,10 @@ Simply save the checkpoint files from the methods as 'ezvsl_flickr.pth'. We have
 | Exploiting Transformation Invariance and Equivariance for Self-supervised Sound Localisation (ACMMM 22) [[Paper]](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
 | Learning Audio-Visual Source Localization via False Negative Aware Contrastive Learning (CVPR 23) [[Paper]](https://arxiv.org/pdf/2303.11302)   |           fnac         |
 
+Example
+```
+python test.py --testset flickr --pth_name ezvsl_flickr.pth
+```
 
 
 ## Training
