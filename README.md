@@ -67,9 +67,9 @@ inference
 
 To evaluate a trained model run
 
-'''
+```
 python test.py --testset {testset_name} --pth_name {pth_name}
-'''
+```
 
 
 ## Training
