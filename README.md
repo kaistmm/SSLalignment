@@ -78,7 +78,7 @@ python test.py --testset {testset_name} --pth_name {pth_name}
 | IS3                      |           is3         |
 
 ## Evaluate other methods
-Simply save the checkpoint files from the methods as 'ezvsl_flickr.pth'. We have already handled the trivial settings.
+Simply save the checkpoint files from the methods as '{method_name}_{put_your_own_message}.pth', such as 'ezvsl_flickr.pth'. We have already handled the trivial settings.
 | Paper title                  |  pth_name must contains  |
 |--------------------------|--------------------------|
 | Localizing Visual Sounds the Hard Way (CVPR 21) [[Paper]](https://arxiv.org/pdf/2104.02691) |           lvs            |
