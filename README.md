@@ -25,6 +25,10 @@ Official PyTorch implementation of our following papers:
 
 ## Overview
 
+<div align="center">
+    <img src="./figs/teaser.png" alt="Pipeline" style="width: 50%;"/>
+</div>
+
 ## Interactive Synthetic Sound Source (IS3) Dataset
 ![is3](./figs/is3.png)
 
