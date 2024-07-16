@@ -79,13 +79,13 @@ python test.py --testset {testset_name} --pth_name {pth_name}
 
 ## Evaluate other methods
 Simply save the checkpoint files from the methods as 'ezvsl_flickr.pth'. We have already handled the trivial settings.
-| Method                   |  pth_name must contains  |
+| Paper title                  |  pth_name must contains  |
 |--------------------------|--------------------------|
-| Chen et. al. [[Paper]](https://arxiv.org/pdf/2104.02691) |           lvs            |
-| Mo et. al. [[Paper]](https://arxiv.org/pdf/2203.09324)   |          ezvsl           |
-| Mo et. al. [[Paper]](https://arxiv.org/pdf/2209.09634)   |           slavc          |
-| Sun et. al. [[Paper]](https://arxiv.org/pdf/2303.11302)   |           fnac         |
-| Liu et. al. [[Paper]](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
+| Localizing Visual Sounds the Hard Way (CVPR21) [[Paper]](https://arxiv.org/pdf/2104.02691) |           lvs            |
+| Localizing Visual Sounds the Easy Way (ECCV22) [[Paper]](https://arxiv.org/pdf/2203.09324)   |          ezvsl           |
+| A Closer Look at Weakly-Supervised Audio-Visual Source Localization (NeurIPS [[Paper]](https://arxiv.org/pdf/2209.09634)   |           slavc          |
+| Learning Audio-Visual Source Localization via False Negative Aware Contrastive Learning [[Paper]](https://arxiv.org/pdf/2303.11302)   |           fnac         |
+| Exploiting Transformation Invariance and Equivariance for Self-supervised Sound Localisation [[Paper]](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
 
 
 
