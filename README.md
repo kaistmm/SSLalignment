@@ -50,10 +50,11 @@ The model checkpoints are available for the following experiments:
 If you find this work useful, please consider citing us:
 
 ```bibtex
-@article{erol2024audio,
-  title={Audio Mamba: Bidirectional State Space Model for Audio Representation Learning},
-  author={Erol, Mehmet Hamza and Senocak, Arda and Feng, Jiu and Chung, Joon Son},
-  journal={arXiv preprint arXiv:2406.03344},
-  year={2024}
+@inproceedings{senocak2023sound,
+  title={Sound source localization is all about cross-modal alignment},
+  author={Senocak, Arda and Ryu, Hyeonggon and Kim, Junsik and Oh, Tae-Hyun and Pfister, Hanspeter and Chung, Joon Son},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={7777--7787},
+  year={2023}
 }
 ```
