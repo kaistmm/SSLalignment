@@ -47,7 +47,7 @@ The model checkpoints are available for the following experiments:
 
 
 ## Citation
-If you find this work useful, please consider citing us:
+If you find this code useful, please consider citing us:
 
 ```bibtex
 @inproceedings{senocak2023sound,
@@ -56,5 +56,15 @@ If you find this work useful, please consider citing us:
   booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
   pages={7777--7787},
   year={2023}
+}
+```
+If you use this dataset useful, please consider citing us:
+
+```bibtex
+@article{senocak2024align,
+  title={Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment},
+  author={Senocak, Arda and Ryu, Hyeonggon and Kim, Junsik and Oh, Tae-Hyun and Pfister, Hanspeter and Chung, Joon Son},
+  journal={arXiv preprint arXiv:},
+  year={2024}
 }
 ```
