@@ -61,8 +61,8 @@ inference
 │       ours_sup.pth.tar
 │       ours_selfsup.pth.tar
 │   test.py
-│   audio011.wav
-│   audio012.wav
+│   datasets.py
+│   model.py
 ```
 
 To evaluate a trained model run
