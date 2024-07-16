@@ -16,7 +16,7 @@ Official PyTorch implementation of our following papers:
 
 ## Index
 - [Overview](#overview)
-- [Interactive Synthetic Sound Source (IS3) Dataset](#interactive-synthetic-sound-source-(is3)-dataset)
+- [Interactive Synthetic Sound Source (IS3) Dataset](#interactive-synthetic-sound-source-is3-dataset)
 - [Environment](#environment)
 - [Model Checkpoints](#model-checkpoints)
 - [Inference](#inference)
