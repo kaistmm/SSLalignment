@@ -78,6 +78,7 @@ python test.py --testset {testset_name} --pth_name {pth_name}
 | IS3                      |           is3         |
 
 ## Evaluate other methods
+Simply save the checkpoint files from the methods as 'ezvsl_flickr.pth'. We have already handled the trivial settings.
 | Method                   |  pth_name must contains  |
 |--------------------------|--------------------------|
 | Chen et. al. [Paper](https://arxiv.org/pdf/2104.02691) |           lvs            |
