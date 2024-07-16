@@ -16,6 +16,7 @@ Official PyTorch implementation of our following papers:
 
 ## Index
 - [Overview](#overview)
+- [Interactive-Synthetic Sound Source (IS3) Dataset](#is3)
 - [Environment](#environment)
 - [Model Checkpoints](#model-checkpoints)
 - [Inference](#inference)
@@ -24,8 +25,9 @@ Official PyTorch implementation of our following papers:
 
 ## Overview
 
-## Environment
+## Interactive-Synthetic Sound Source (IS3) Dataset
 
+## Environment
 
 ## Model Checkpoints
 The model checkpoints are available for the following experiments:
