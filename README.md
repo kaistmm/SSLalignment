@@ -58,7 +58,7 @@ If you find this code useful, please consider citing us:
   year={2023}
 }
 ```
-If you use this dataset useful, please consider citing us:
+If you use this dataset, please consider citing us:
 
 ```bibtex
 @article{senocak2024align,
