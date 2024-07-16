@@ -43,14 +43,29 @@ The model checkpoints are available for the following experiments:
 
 | Training Set                  | Test Set | Model Type | Performance (cIoU) | Checkpoint |
 |--------------------------|:-------------:|:-------------:|:-------------:|:------------:|
-| VGGSound-144K           |  VGG-SS       | NN w/ Sup. Pre. Enc.        | 39.94      | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
-| VGGSound-144K           |  VGG-SS       | NN w/ Self-Sup. Pre. Enc.        | 39.16       | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
-| VGGSound-144K           |  VGG-SS       | NN w/ Sup. Pre. Enc. Pre-trained Vision       | 41.42       | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
-| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Sup. Pre. Enc.        | 85.20      | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
-| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Self-Sup. Pre. Enc.        | 84.80      | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
-| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Sup. Pre. Enc. Pre-trained Vision         | 86.00      | [Link](https://drive.google.com/file/d/1QgnyvGYxKd-q6twXf4i05jZA5xFIFs8j/view?usp=drive_link) |
+| VGGSound-144K           |  VGG-SS       | NN w/ Sup. Pre. Enc.        | 39.94      | [Link](https://drive.google.com/file/d/1-WUEoAmp4WBj4Tbsi9Ybh2bq4W6-uYnd/view?usp=drive_link) |
+| VGGSound-144K           |  VGG-SS       | NN w/ Self-Sup. Pre. Enc.        | 39.16       | [Link](https://drive.google.com/file/d/1p_eXOlZfeCo5EwY5RRkh4YnAnMZJ0Eyz/view?usp=drive_link) |
+| VGGSound-144K           |  VGG-SS       | NN w/ Sup. Pre. Enc. Pre-trained Vision       | 41.42       | [Link](https://drive.google.com/file/d/1FYv6Pt8k8MdHlBHDCaMVGtWZN_UXh_GJ/view?usp=drive_link) |
+| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Sup. Pre. Enc.        | 85.20      | [Link](https://drive.google.com/file/d/1R_LEEcUEnwREvt_ducCdnEVUI6VHvnqv/view?usp=drive_link) |
+| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Self-Sup. Pre. Enc.        | 84.80      | [Link](https://drive.google.com/file/d/1HHnUc3sERGrCjUbHklS9uDdA5yxjRtKB/view?usp=drive_link) |
+| Flickr-SoundNet-144K           |  Flickr-SoundNet       | NN w/ Sup. Pre. Enc. Pre-trained Vision         | 86.00      | [Link](https://drive.google.com/file/d/1zs0gr1_QVfonw0Q2VVbExwUUDhJSUH35/view?usp=drive_link) |
 
 ## Inference
+
+Put checkpoint files into the 'checkpoints' directory:
+```
+inference
+│
+└───checkpoints
+│       ours_sup_previs.pth.tar
+│       ours_sup.pth.tar
+│       ours_selfsup.pth.tar
+│   test.py
+│   audio011.wav
+│   audio012.wav
+```
+
+
 
 ## Training
 Training code is coming soon!
