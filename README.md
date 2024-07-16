@@ -56,7 +56,7 @@ The model checkpoints are available for the following experiments:
 Training code is coming soon!
 
 ## Citation
-If you find this code useful, please consider citing us:
+If you find this code useful, please consider giving a star ⭐ and citing us:
 
 ```bibtex
 @inproceedings{senocak2023sound,
@@ -67,7 +67,7 @@ If you find this code useful, please consider citing us:
   year={2023}
 }
 ```
-If you use this dataset, please consider citing us:
+If you use this dataset, please consider giving a star ⭐ and citing us:
 
 ```bibtex
 @article{senocak2024align,
