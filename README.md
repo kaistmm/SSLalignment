@@ -77,6 +77,16 @@ python test.py --testset {testset_name} --pth_name {pth_name}
 | Flickr-SoundNet          |           flickr         |
 | IS3                      |           is3         |
 
+## Evaluate other methods
+| Method                   |  pth_name must contains  |
+|--------------------------|--------------------------|
+| Chen et. al. [Link](https://arxiv.org/pdf/2104.02691) |  |          lvs            |
+| Mo et. al. [Link](https://arxiv.org/pdf/2203.09324)   |          ezvsl           |
+| Mo et. al. [Link](https://arxiv.org/pdf/2209.09634)   |           slavc          |
+| Sun et. al. [Link](https://arxiv.org/pdf/2303.11302)   |           fnac         |
+| Liu et. al. [Link](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
+
+
 
 ## Training
 Training code is coming soon!
