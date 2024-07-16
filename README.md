@@ -53,7 +53,7 @@ The model checkpoints are available for the following experiments:
 ## Inference
 
 ## Training
-
+Training code is coming soon!
 
 ## Citation
 If you find this code useful, please consider citing us:
