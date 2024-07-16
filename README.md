@@ -57,9 +57,9 @@ Put checkpoint files into the 'checkpoints' directory:
 inference
 │
 └───checkpoints
-│   │   ours_sup_previs.pth.tar
-│   │   ours_sup.pth.tar
-│   │   ours_selfsup.pth.tar
+│       ours_sup_previs.pth.tar
+│       ours_sup.pth.tar
+│       ours_selfsup.pth.tar
 │   test.py
 │   audio011.wav
 │   audio012.wav
