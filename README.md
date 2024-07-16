@@ -25,7 +25,7 @@ Official PyTorch implementation of our following papers:
 
 ## Overview
 
-## Interactive-Synthetic Sound Source (IS3) Dataset
+## Interactive Synthetic Sound Source (IS3) Dataset
 
 ## Environment
 
