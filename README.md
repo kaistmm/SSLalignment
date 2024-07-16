@@ -14,8 +14,34 @@ Official PyTorch implementation of our following papers:
 >
 >  arXiV 2024
 
+## Index
+- [Overview](#overview)
+- [Environment](#environment)
+- [Model Checkpoints](#model-checkpoints)
+- [Inference](#inference)
+- [Training](#training)
+- [Citation](#citation)
+
+
 ## Environment
 
 
 ## Model Checkpoints
 The model checkpoints are available for the following experiments:
+
+## Inference
+
+## Training
+
+
+## Citation
+If you find this work useful, please consider citing us:
+
+```bibtex
+@article{erol2024audio,
+  title={Audio Mamba: Bidirectional State Space Model for Audio Representation Learning},
+  author={Erol, Mehmet Hamza and Senocak, Arda and Feng, Jiu and Chung, Joon Son},
+  journal={arXiv preprint arXiv:2406.03344},
+  year={2024}
+}
+```
