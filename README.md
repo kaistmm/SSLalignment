@@ -82,10 +82,10 @@ Simply save the checkpoint files from the methods as 'ezvsl_flickr.pth'. We have
 | Method                   |  pth_name must contains  |
 |--------------------------|--------------------------|
 | Chen et. al. [[Paper]](https://arxiv.org/pdf/2104.02691) |           lvs            |
-| Mo et. al. [Paper](https://arxiv.org/pdf/2203.09324)   |          ezvsl           |
-| Mo et. al. [Paper](https://arxiv.org/pdf/2209.09634)   |           slavc          |
-| Sun et. al. [Paper](https://arxiv.org/pdf/2303.11302)   |           fnac         |
-| Liu et. al. [Paper](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
+| Mo et. al. [[Paper]](https://arxiv.org/pdf/2203.09324)   |          ezvsl           |
+| Mo et. al. [[Paper]](https://arxiv.org/pdf/2209.09634)   |           slavc          |
+| Sun et. al. [[Paper]](https://arxiv.org/pdf/2303.11302)   |           fnac         |
+| Liu et. al. [[Paper]](https://arxiv.org/pdf/2206.12772v2)  |          ssltie         |
 
 
 
