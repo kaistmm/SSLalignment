@@ -34,6 +34,8 @@ Official PyTorch implementation of our following papers:
 
 *IS3 dataset is available [`here`](https://drive.google.com/file/d/12jq7-Ke09ZPoUI1od44q97DNLrThoHc3/view?usp=sharing)*
 
+The IS3 data is organized as follows:
+
 ## Environment
 
 ## Model Checkpoints
