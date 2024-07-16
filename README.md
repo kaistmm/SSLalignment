@@ -71,6 +71,12 @@ To evaluate a trained model run
 python test.py --testset {testset_name} --pth_name {pth_name}
 ```
 
+| Test Set                 |     testset_name         |
+|--------------------------|--------------------------|
+| VGG-SS                   |           vggss          |
+| Flickr-SoundNet          |           flickr         |
+| IS3                      |           is3         |
+
 
 ## Training
 Training code is coming soon!
