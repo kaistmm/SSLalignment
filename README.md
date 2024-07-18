@@ -36,7 +36,9 @@ Official PyTorch implementation of our following papers:
 
 The IS3 data is organized as follows:
 
-`images` and `audio_waw` folders contain all the image and audio files respectively.
+Note that in IS3 dataset, each annotation is saved as a separate file. For example; the sample `accordion_baby_10467` image contains two annotations for accordion and baby objects. These annotations are saved as `accordion_baby_10467_accordion` and `accordion_baby_10467_baby` for straightforward use. You can always project bounding boxes or segmentation maps onto the original image to see them all at once.
+
+`images` and `audio_waw` folders contain all the image and audio files respectively. 
 
 `IS3_annotation.json` file contains ground truth bounding box and category information of each annotation.
 
