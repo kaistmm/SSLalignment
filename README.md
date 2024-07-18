@@ -42,7 +42,7 @@ Note that in IS3 dataset, each annotation is saved as a separate file. For examp
 
 `IS3_annotation.json` file contains ground truth bounding box and category information of each annotation.
 
-`gt_segmentation` folder contains segmentation maps in binary image format for each annotation. You can query the file name in [`IS3_annotation.json`] to get semantic category of each segmentation map.
+`gt_segmentation` folder contains segmentation maps in binary image format for each annotation. You can query the file name in `IS3_annotation.json` to get semantic category of each segmentation map.
 
 ## Environment
 
