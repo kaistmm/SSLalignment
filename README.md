@@ -8,7 +8,7 @@ Official PyTorch implementation of our following papers:
 >
 >  ICCV 2023
 
->  **[Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment](https://openaccess.thecvf.com/content/ICCV2023/papers/Senocak_Sound_Source_Localization_is_All_about_Cross-Modal_Alignment_ICCV_2023_paper.pdf)**  
+>  **[Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment](https://arxiv.org/abs/2407.13676)**  
 >
 > [Arda Senocak*](https://ardasnck.github.io/), [Hyeonggon Ryu*](https://sites.google.com/view/hyeonggonryu), [Junsik Kim*](https://sites.google.com/site/jskimcv/), [Tae-Hyun Oh](https://ami.postech.ac.kr/members/tae-hyun-oh), [Hanspeter Pfister](https://vcg.seas.harvard.edu/people), [Joon Son Chung](https://mmai.io/joon/) (* Equal Contribution)
 >
@@ -122,7 +122,7 @@ If you use this dataset, please consider giving a star ⭐ and citing us:
 @article{senocak2024align,
   title={Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment},
   author={Senocak, Arda and Ryu, Hyeonggon and Kim, Junsik and Oh, Tae-Hyun and Pfister, Hanspeter and Chung, Joon Son},
-  journal={arXiv preprint arXiv:},
+  journal={arXiv preprint arXiv:2407.13676},
   year={2024}
 }
 ```
