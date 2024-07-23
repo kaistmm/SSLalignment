@@ -46,11 +46,7 @@ def get_arguments():
     parser.add_argument('--port', type=int, default=12345)
     parser.add_argument('--dist_url', type=str, default='tcp://localhost:12345')
     parser.add_argument('--multiprocessing_distributed', action='store_true')
-    parser.add_argument('--box_or_seg', default='box', type=str)
-    parser.add_argument('--random_audio', action='store_true')
     parser.add_argument('--visualize', action='store_true')
-    parser.add_argument('--miou', action='store_true')
-    parser.add_argument('--adaptive_miou', action='store_true')
     
     return parser.parse_args()
 
@@ -75,12 +71,8 @@ def main(args):
         ssltie_args.test_gt_path = args.test_gt_path
         ssltie_args.testset = args.testset
         ssltie_args.dataset_mode = args.testset
-        ssltie_args.box_or_seg = args.box_or_seg
-        ssltie_args.random_audio = args.random_audio
         ssltie_args.visualize = args.visualize
         ssltie_args.pth_name = args.pth_name
-        ssltie_args.adaptive_miou = args.adaptive_miou
-        ssltie_args.miou = args.miou
         
     elif 'lvs' in args.pth_name or 'ours' in args.pth_name:
         import easydict
@@ -97,12 +89,8 @@ def main(args):
         'soft_ep' : 1,
         'test_gt_path' : args.test_gt_path,
         'testset' : args.testset,
-        'box_or_seg' : args.box_or_seg,
-        'random_audio' : args.random_audio,
         'visualize' : args.visualize,
         'pth_name' : args.pth_name,
-        'adaptive_miou' : args.adaptive_miou,
-        'miou' : args.miou,
         })
         audio_visual_model= AVENet(lvs_args) 
     elif 'ezvsl' in args.pth_name or 'margin' in args.pth_name:
@@ -226,7 +214,6 @@ def validate_htf(testdataloader, object_saliency_model, viz_dir, args):
     evaluator = utils.Evaluator_iiou()
     evaluator_ogl = utils.Evaluator_iiou()
     evaluator_adap = utils.Evaluator_iiou()
-    evaluator_miou = utils.Evaluator_miou()
     
     iou = []
     iou_adap = []
@@ -307,14 +294,6 @@ def validate_htf(testdataloader, object_saliency_model, viz_dir, args):
                 plt.axis('off')
                 plt.savefig(os.path.join('../unified_qualitatives',args.testset,args.pth_name,target_name), bbox_inches='tight', pad_inches=0, transparent=True)
                 plt.close()
-        
-        if args.miou:
-            heatmap = nn.functional.interpolate(heatmap, size=(224, 224), mode='bilinear', align_corners=True)
-            evaluator_miou.evaluate_batch(heatmap.cpu().detach(), bboxes['gt_map'], None, args.adaptive_miou)
-    if args.miou:
-        metrics, (mIoU, F_score) = evaluator_miou.finalize()
-        print('mIoU :',mIoU)
-        print('F-Score :', F_score)
             
     ciou = evaluator.finalize_cIoU()        
     auc,auc_adap = evaluator.finalize_AUC()
@@ -365,7 +344,6 @@ def validate_lvs(testdataloader, model, object_saliency_model, viz_dir, args):
     evaluator = utils.Evaluator_iiou()
     evaluator_ogl = utils.Evaluator_iiou()
     evaluator_adap = utils.Evaluator_iiou()
-    evaluator_miou = utils.Evaluator_miou()
 #     import pdb;pdb.set_trace()    
 
     evaluator_full = utils.EvaluatorFull()
@@ -517,31 +495,6 @@ def validate_lvs(testdataloader, model, object_saliency_model, viz_dir, args):
                     plt.axis('off')
                     plt.savefig(os.path.join('../unified_qualitatives',args.testset,args.pth_name,target_name), bbox_inches='tight', pad_inches=0, transparent=True)
                     plt.close()
-        
-        if args.miou:
-            evaluator_miou.evaluate_batch(heatmap.cpu().detach(), bboxes['gt_map'], None, args.adaptive_miou)
-    
-#     print(f'{step+1}/{len(testdataloader)}: AV-Prec@50={evaluator_full.precision_at_50():.3f}')
-    
-#     print('='*20 + ' AVL ' + '='*20)
-#     stats_av = evaluator_full.finalize_stats()
-#     print('\n'.join([f' - {k}: {stats_av[k]}' for k in sorted(stats_av.keys()) if stats_av[k] is not np.nan]))
-
-
-    
-    if args.miou:
-        metrics, (mIoU, F_score) = evaluator_miou.finalize()
-        print('mIoU :',mIoU)
-        print('F-Score :', F_score)
-            
-#     def compute_stats(eval):
-#         mAP = eval.finalize_AP50()
-#         ciou = eval.finalize_cIoU()
-#         auc = eval.finalize_AUC()
-#         return mAP, ciou, auc
-
-#     print('AV: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator)))
-#     print('AV_adap: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator_adap)))
             
     ciou = evaluator.finalize_cIoU()        
     auc,auc_adap = evaluator.finalize_AUC()
@@ -591,7 +544,6 @@ def validate_ssltie(testdataloader, model, object_saliency_model, viz_dir, args)
     evaluator = utils.Evaluator_iiou()
     evaluator_ogl = utils.Evaluator_iiou()
     evaluator_adap = utils.Evaluator_iiou()
-    evaluator_miou = utils.Evaluator_miou()
     
     iou = []
     iou_adap = []
@@ -672,14 +624,7 @@ def validate_ssltie(testdataloader, model, object_saliency_model, viz_dir, args)
                 plt.savefig(os.path.join('../unified_qualitatives',args.testset,args.pth_name,target_name), bbox_inches='tight', pad_inches=0, transparent=True)
                 plt.close()
         
-        if args.miou:
-            heatmap = nn.functional.interpolate(heatmap, size=(224, 224), mode='bilinear', align_corners=True)
-            evaluator_miou.evaluate_batch(heatmap.cpu().detach(), bboxes['gt_map'], None, args.adaptive_miou)
-    if args.miou:
-        metrics, (mIoU, F_score) = evaluator_miou.finalize()
-        print('mIoU :',mIoU)
-        print('F-Score :', F_score)
-            
+        
     ciou = evaluator.finalize_cIoU()        
     auc,auc_adap = evaluator.finalize_AUC()
     iauc = evaluator.finalize_IAUC()       
@@ -718,27 +663,6 @@ def validate_ssltie(testdataloader, model, object_saliency_model, viz_dir, args)
     print('OGL results')
     print('CIoU : {:.2f}'.format(ciou_ogl),'CIoU_adap : {:.2f}'.format(ciou_adap_ogl))
     print('AUC : {:.2f}'.format(auc_ogl),'AUC_adap : {:.2f}'.format(auc_adap_ogl))
-    
-    
-#     results = []
-#     for i in range(21):
-#         result = np.sum(np.array(iou) >= 0.05 * i)
-#         result = result / len(iou)
-#         results.append(result)
-#     x = [0.05 * i for i in range(21)]
-#     auc_ = auc(x, results)
-#     print('cIoU' , np.sum(np.array(iou) >= 0.5)/len(iou))
-#     print('auc',auc_)
-    
-#     results_adap = []
-#     for i in range(21):
-#         result_adap = np.sum(np.array(iou_adap) >= 0.05 * i)
-#         result_adap = result_adap / len(iou_adap)
-#         results_adap.append(result_adap)
-#     x = [0.05 * i for i in range(21)]
-#     auc_ = auc(x, results_adap)
-#     print('cIoU_adap' , np.sum(np.array(iou_adap) >= 0.5)/len(iou_adap))
-#     print('auc_adap',auc_)
 
 @torch.no_grad()
 def validate(testdataloader, audio_visual_model, object_saliency_model, viz_dir, args):
@@ -751,7 +675,6 @@ def validate(testdataloader, audio_visual_model, object_saliency_model, viz_dir,
     evaluator_obj = utils.Evaluator()
     evaluator_av_obj = utils.Evaluator()
     evaluator_adap = utils.Evaluator()
-    evaluator_miou = utils.Evaluator_miou()
     
     
     evaluator_full = utils.EvaluatorFull()
@@ -847,44 +770,6 @@ def validate(testdataloader, audio_visual_model, object_saliency_model, viz_dir,
                 plt.axis('off')
                 plt.savefig(os.path.join('../unified_qualitatives',args.testset,args.pth_name,target_name), bbox_inches='tight', pad_inches=0, transparent=True)
                 plt.close()
-                
-#             if args.save_visualizations:
-#                 denorm_image = inverse_normalize(image).squeeze(0).permute(1, 2, 0).cpu().numpy()[:, :, ::-1]
-#                 denorm_image = (denorm_image*255).astype(np.uint8)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_image.jpg'), denorm_image)
-
-#                 # visualize bboxes on raw images
-#                 gt_boxes_img = utils.visualize(denorm_image, bboxes['bboxes'])
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_gt_boxes.jpg'), gt_boxes_img)
-
-#                 # visualize heatmaps
-#                 heatmap_img = np.uint8(pred_av*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_av.jpg'), fin)
-
-#                 heatmap_img = np.uint8(pred_obj*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_obj.jpg'), fin)
-
-#                 heatmap_img = np.uint8(pred_av_obj*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_av_obj.jpg'), fin)
-        
-        if args.miou:
-            evaluator_miou.evaluate_batch(heatmap_av_.cpu().detach(), bboxes['gt_map'], None, args.adaptive_miou)
-    if args.miou:
-        metrics, (mIoU, F_score) = evaluator_miou.finalize()
-        print('mIoU :',mIoU)
-        print('F-Score :', F_score)
-        
-        
-#     print('='*20 + ' AVL ' + '='*20)
-#     stats_av = evaluator_full.finalize_stats()
-#     print('\n'.join([f' - {k}: {stats_av[k]}' for k in sorted(stats_av.keys()) if stats_av[k] is not np.nan]))
-
             
     ciou = evaluator_av.finalize_cIoU()        
     auc,auc_adap = evaluator_av.finalize_AUC()
@@ -925,112 +810,6 @@ def validate(testdataloader, audio_visual_model, object_saliency_model, viz_dir,
     print('AUC : {:.2f}'.format(auc_ogl),'AUC_adap : {:.2f}'.format(auc_adap_ogl))
     
     print(ciou,auc,auc_adap,iauc,iauc_adap)
-        
-# def validate(testdataloader, audio_visual_model, object_saliency_model, viz_dir, args):
-#     audio_visual_model.train(False)
-#     object_saliency_model.train(False)
-
-#     evaluator_av = utils.Evaluator()
-#     evaluator_obj = utils.Evaluator()
-#     evaluator_av_obj = utils.Evaluator()
-#     evaluator_adap = utils.Evaluator()
-#     evaluator_miou = utils.Evaluator_miou()
-    
-#     for step, (image, spec, bboxes, name) in enumerate(tqdm(testdataloader)):
-#         if args.gpu is not None:
-#             spec = spec.cuda(args.gpu, non_blocking=True)
-#             image = image.cuda(args.gpu, non_blocking=True)
-# #         import pdb;pdb.set_trace()
-#         # Compute S_AVL
-#         heatmap_av = audio_visual_model(image.float(), spec.float())[1].unsqueeze(1)
-#         if 'fnac' in args.pth_name or 'margin' in args.pth_name:
-#             heatmap_av_ = F.interpolate(heatmap_av, size=(224, 224), mode='bicubic', align_corners=False)
-#         else:
-#             heatmap_av_ = F.interpolate(heatmap_av, size=(224, 224), mode='bilinear', align_corners=True)
-#         heatmap_av = heatmap_av_.data.cpu().numpy()
-
-#         # Compute S_OBJ
-#         img_feat = object_saliency_model(image)
-#         if 'fnac' in args.pth_name or 'margin' in args.pth_name:
-#             heatmap_obj = F.interpolate(img_feat, size=(224, 224), mode='bicubic', align_corners=False)
-#         else:
-#             heatmap_obj = F.interpolate(img_feat, size=(224, 224), mode='bilinear', align_corners=True)
-#         heatmap_obj = heatmap_obj.data.cpu().numpy()
-
-#         # Compute eval metrics and save visualizations
-#         for i in range(spec.shape[0]):
-# #             import pdb;pdb.set_trace()
-#             pred_av = utils.normalize_img(heatmap_av[i, 0])
-#             pred_obj = utils.normalize_img(heatmap_obj[i, 0])
-#             pred_av_obj = utils.normalize_img(pred_av * args.alpha + pred_obj * (1 - args.alpha))
-
-#             gt_map = bboxes['gt_map'][i].data.cpu().numpy()
-
-#             thr_av = np.sort(pred_av.flatten())[int(pred_av.shape[0] * pred_av.shape[1] * 0.5)]
-#             evaluator_av.cal_CIOU(pred_av, gt_map, thr_av)
-        
-#             gt_nums = (gt_map!=0).sum()
-#             if int(gt_nums) == 0:
-#                 gt_nums = int(pred_av.shape[0] * pred_av.shape[1])//2
-#             thr_adap = np.sort(pred_av.flatten())[int(pred_av.shape[0] * pred_av.shape[1])-int(gt_nums)] # adap
-#             evaluator_adap.cal_CIOU(pred_av, gt_map, thr_adap)
-            
-
-#             thr_obj = np.sort(pred_obj.flatten())[int(pred_obj.shape[0] * pred_obj.shape[1] * 0.5)]
-#             evaluator_obj.cal_CIOU(pred_obj, gt_map, thr_obj)
-
-#             thr_av_obj = np.sort(pred_av_obj.flatten())[int(pred_av_obj.shape[0] * pred_av_obj.shape[1] * 0.5)]
-#             evaluator_av_obj.cal_CIOU(pred_av_obj, gt_map, thr_av_obj)
-
-#             if args.save_visualizations:
-#                 denorm_image = inverse_normalize(image).squeeze(0).permute(1, 2, 0).cpu().numpy()[:, :, ::-1]
-#                 denorm_image = (denorm_image*255).astype(np.uint8)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_image.jpg'), denorm_image)
-
-#                 # visualize bboxes on raw images
-#                 gt_boxes_img = utils.visualize(denorm_image, bboxes['bboxes'])
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_gt_boxes.jpg'), gt_boxes_img)
-
-#                 # visualize heatmaps
-#                 heatmap_img = np.uint8(pred_av*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_av.jpg'), fin)
-
-#                 heatmap_img = np.uint8(pred_obj*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_obj.jpg'), fin)
-
-#                 heatmap_img = np.uint8(pred_av_obj*255)
-#                 heatmap_img = cv2.applyColorMap(heatmap_img[:, :, np.newaxis], cv2.COLORMAP_JET)
-#                 fin = cv2.addWeighted(heatmap_img, 0.8, np.uint8(denorm_image), 0.2, 0)
-#                 cv2.imwrite(os.path.join(viz_dir, f'{name[i]}_pred_av_obj.jpg'), fin)
-        
-#         if args.testset == 'ms3' or args.testset == 's4':
-#             evaluator_miou.evaluate_batch(heatmap_av_.cpu().detach(), bboxes['gt_map'])
-#     if args.testset == 'ms3' or args.testset == 's4':
-#         metrics, (mIoU, F_score) = evaluator_miou.finalize()
-#         print('mIoU :',mIoU)
-#         print('F-Score :', F_score)
-        
-# #         print(f'{step+1}/{len(testdataloader)}: map_av={evaluator_av.finalize_AP50():.2f} map_obj={evaluator_obj.finalize_AP50():.2f} map_av_obj={evaluator_av_obj.finalize_AP50():.2f}')
-
-#     def compute_stats(eval):
-#         mAP = eval.finalize_AP50()
-#         ciou = eval.finalize_cIoU()
-#         auc = eval.finalize_AUC()
-#         return mAP, ciou, auc
-
-#     print('AV: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator_av)))
-#     print('AV_adap: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator_adap)))
-#     print('Obj: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator_obj)))
-#     print('AV_Obj: AP50(cIoU)={}, Avg-cIoU={}, AUC={}'.format(*compute_stats(evaluator_av_obj)))
-
-#     utils.save_iou(evaluator_av.ciou, 'av', viz_dir)
-#     utils.save_iou(evaluator_obj.ciou, 'obj', viz_dir)
-#     utils.save_iou(evaluator_av_obj.ciou, 'av_obj', viz_dir)
-
 
 class NormReducer(nn.Module):
     def __init__(self, dim):
@@ -1052,87 +831,3 @@ class Unsqueeze(nn.Module):
 
 if __name__ == "__main__":
     main(get_arguments())
-
-    
-    
-# def validate_lvs(testdataloader, model, object_saliency_model, viz_dir, args):
-#     from sklearn.metrics import auc
-#     model.train(False)
-#     object_saliency_model.train(False)
-    
-#     evaluator = utils_lvs.Evaluator()
-# #     evaluator = utils.Evaluator_iiou()
-#     evaluator_adap = utils_lvs.Evaluator()
-#     evaluator_miou = utils.Evaluator_miou()
-        
-#     iou = []
-#     iou_adap = []
-#     for step, (image, spec, bboxes, name) in enumerate(tqdm(testdataloader)):
-# #         print('%d / %d' % (step,len(testdataloader) - 1))
-#         spec = Variable(spec).cuda()
-#         image = Variable(image).cuda()
-#         heatmap,_,Pos,Neg = model(image.float(),spec.float(),args)
-# #         heatmap_arr =  heatmap.data.cpu().numpy()
-
-#         heatmap = nn.functional.interpolate(heatmap, size=(224, 224), mode='bilinear', align_corners=True)
-#         for i in range(spec.shape[0]):
-# #             heatmap_now = cv2.resize(heatmap_arr[i,0], dsize=(224, 224), interpolation=cv2.INTER_LINEAR)
-#             heatmap_now = heatmap[i:i+1].cpu().numpy()
-#             heatmap_now = utils_lvs.normalize_img(-heatmap_now[0][0])
-#             gt_map = bboxes['gt_map'][i].data.cpu().numpy()#testset_gt(args,name[i])
-#             pred = 1 - heatmap_now
-#             threshold = np.sort(pred.flatten())[int(pred.shape[0] * pred.shape[1] / 2)]
-            
-#             pred_av = np.zeros(pred.shape)
-#             pred_av[pred>threshold] = 1
-#             pred_av[pred<=threshold] = 0
-#             ciou,inter,union = evaluator.cal_CIOU(pred_av,gt_map,0.5)
-#             iou.append(ciou)
-            
-#             gt_nums = (gt_map!=0).sum()
-#             if int(gt_nums) == 0:
-#                 gt_nums = int(pred.shape[0] * pred.shape[1])//2
-#             threshold = np.sort(pred.flatten())[int(pred.shape[0] * pred.shape[1])-int(gt_nums)] # adap
-            
-#             pred_adap = np.zeros(pred.shape)
-#             pred_adap[pred>threshold] = 1
-#             pred_adap[pred<=threshold] = 0
-#             ciou_adap,_,_ = evaluator_adap.cal_CIOU(pred_adap,gt_map,0.5)
-#             iou_adap.append(ciou_adap)
-            
-
-            
-# #             short_name = '_'.join(name[i].split('/')[-1].replace('.jpg','').split('_')[:-1])
-# #             if short_name in evaluator_ego.iou.keys():
-# #                 evaluator_ego.iou_adap[short_name].append(evaluator_ego.ciou_adap[-1])
-# #                 evaluator_ego.iou[short_name].append(evaluator_ego.ciou[-1])
-# #             else:
-# #                 evaluator_ego.iou_adap[short_name] = [evaluator_ego.ciou_adap[-1]]
-# #                 evaluator_ego.iou[short_name] = [evaluator_ego.ciou[-1]]
-        
-#         if args.testset == 'ms3' or args.testset == 's4':
-#             evaluator_miou.evaluate_batch(heatmap.cpu().detach(), bboxes['gt_map'])
-#     if args.testset == 'ms3' or args.testset == 's4':
-#         metrics, (mIoU, F_score) = evaluator_miou.finalize()
-#         print('mIoU :',mIoU)
-#         print('F-Score :', F_score)
-#     import pdb;pdb.set_trace()
-#     results = []
-#     for i in range(21):
-#         result = np.sum(np.array(iou) >= 0.05 * i)
-#         result = result / len(iou)
-#         results.append(result)
-#     x = [0.05 * i for i in range(21)]
-#     auc_ = auc(x, results)
-#     print('cIoU' , np.sum(np.array(iou) >= 0.5)/len(iou))
-#     print('auc',auc_)
-    
-#     results_adap = []
-#     for i in range(21):
-#         result_adap = np.sum(np.array(iou_adap) >= 0.05 * i)
-#         result_adap = result_adap / len(iou_adap)
-#         results_adap.append(result_adap)
-#     x = [0.05 * i for i in range(21)]
-#     auc_ = auc(x, results_adap)
-#     print('cIoU_adap' , np.sum(np.array(iou_adap) >= 0.5)/len(iou_adap))
-#     print('auc_adap',auc_)

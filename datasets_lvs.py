@@ -142,9 +142,6 @@ class GetAudioVideoDataset(Dataset):
         elif args.testset == 'vpoms':
             testcsv = 'metadata/vpo_ms_bbox.json'
         
-        if args.random_audio:
-            testcsv = testcsv.replace('.json','_random.json')
-        
         self.audio_length = 10
         self.st = 3.5
         self.fi = 6.5
@@ -188,19 +185,6 @@ class GetAudioVideoDataset(Dataset):
                 self.audio_path = '/'.join(jsonfile[0]['audio'].split('/')[:-1])
                 self.image_path = '/'.join(jsonfile[0]['image'].split('/')[:-1])
             
-            
-            seg_json = {
-                'is3':'./metadata/synthetic3240_seg.json',
-                'vpoms':'./metadata/vpo_ms_seg.json',
-                'vposs':'./metadata/vpo_ss_seg.json',
-                'ms3':'./metadata/ms3_seg.json',
-                's4':'./metadata/s4_seg.json'}[args.testset]
-
-
-            if self.args.box_or_seg=='seg':
-                with open(seg_json) as fi:
-                    segjsonfile = json.load(fi)
-                self.seg_gt = [fn['gt_box'] for fn in segjsonfile]
             
         else:
             with open(testcsv) as f:
@@ -304,20 +288,14 @@ class GetAudioVideoDataset(Dataset):
         spectrogram = self.aid_transform(spectrogram)
         
         bboxes = {}
-        if self.all_bboxes is not None and self.args.box_or_seg=='box':
+        if self.all_bboxes is not None:
             bb = -torch.ones((10, 4)).long()
             tmpbox = self.all_bboxes[file[:-4]]
             bb[:len(tmpbox)] = torch.from_numpy(np.array(tmpbox))
             bboxes['bboxes'] = bb
             
             bboxes['gt_map'] = bbox2gtmap(self.all_bboxes[file[:-4]], self.args.testset)
-        if self.args.box_or_seg=='seg':
-            gts = self.seg_gt[idx]
-            gts = np.array(Image.open(gts).resize((224,224)))
-            gts[gts<128]=0
-            gts[gts>=128]=1
-            bboxes['gt_map'] = gts
-            
+        
         return frame,spectrogram,bboxes,file
 
 
