@@ -167,10 +167,6 @@ class GetAudioVideoDataset_ssltie(Dataset):
         elif args.testset == 's4':
             testcsv = 'metadata/s4_box.json'
         
-        if args.random_audio:
-            testcsv = testcsv.replace('.json','_random.json')
-
-        
         # Debug with a small dataset
         if args.debug:
             
@@ -324,20 +320,7 @@ class GetAudioVideoDataset_ssltie(Dataset):
         
         self.count = 0
         
-        seg_json = {
-            'vggss':'',
-            'flickr':'',
-            'is3':'./metadata/synthetic3240_seg.json',
-            'vpoms':'./metadata/vpo_ms_seg.json',
-            'vposs':'./metadata/vpo_ss_seg.json',
-            'ms3' : './metadata/ms3_seg.json',
-            's4' : './metadata/s4_seg.json'}[args.testset]
-
-        if self.args.box_or_seg=='seg':
-            with open(seg_json) as fi:
-                segjsonfile = json.load(fi)
-            self.seg_gt = [fn['gt_box'] for fn in segjsonfile]
-
+        
     def _init_transform(self):
         mean = [0.485, 0.456, 0.406]
         std = [0.229, 0.224, 0.225]
@@ -470,15 +453,9 @@ class GetAudioVideoDataset_ssltie(Dataset):
         spectrogram = self.AmplitudeToDB(spectrogram)
         
         bboxes = {}
-        if self.all_bboxes is not None and self.args.box_or_seg=='box':
+        if self.all_bboxes is not None:
 #             bboxes['bboxes'] = self.all_bboxes[file_id]
             bboxes['gt_map'] = bbox2gtmap(self.all_bboxes[file.split('.')[0]], self.args.testset)
-        if self.args.box_or_seg=='seg':
-            gts = self.seg_gt[idx]
-            gts = np.array(Image.open(gts).resize((224,224)))
-            gts[gts<128]=0
-            gts[gts>=128]=1
-            bboxes['gt_map'] = gts
             
         return frame, spectrogram, bboxes, file
 

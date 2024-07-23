@@ -164,31 +164,6 @@ class AudioVisualDataset(Dataset):
         self.model_name = model_name
         self.args = args
         
-#         self.audio_length = 10
-#         self.st = 3.5
-#         self.fi = 6.5
-            
-        
-        seg_json = {
-            'vggss':'',
-            'flickr':'',
-            'is3':'./metadata/synthetic3240_seg.json',
-            'vpoms':'./metadata/vpo_ms_seg.json',
-            'vposs':'./metadata/vpo_ss_seg.json',
-            'ms3' : './metadata/ms3_seg.json',
-            's4' : './metadata/s4_seg.json'}[args.testset]
-
-        if self.args.box_or_seg=='seg':
-            with open(seg_json) as fi:
-                jsonfile = json.load(fi)
-            self.seg_gt = [fn['gt_box'] for fn in jsonfile]
-            
-#         if args.testset == 'ms3' or args.testset == 's4':
-#             self.audio_length = 5
-#             self.st = 1
-#             self.fi = 4
-
-        
     def getitem(self, idx):
         file = self.image_files[idx]
         file_id = file.split('.')[0]
@@ -227,15 +202,9 @@ class AudioVisualDataset(Dataset):
             spectrogram = self.audio_transform(load_spectrogram(audio_fn, dur = self.audio_dur))
 
         bboxes = {}
-        if self.all_bboxes is not None and self.args.box_or_seg=='box':
+        if self.all_bboxes is not None:
 #             bboxes['bboxes'] = self.all_bboxes[file_id]
             bboxes['gt_map'] = bbox2gtmap(self.all_bboxes[file_id], self.bbox_format)
-        if self.args.box_or_seg=='seg':
-            gts = self.seg_gt[idx]
-            gts = np.array(Image.open(gts).resize((224,224)))
-            gts[gts<128]=0
-            gts[gts>=128]=1
-            bboxes['gt_map'] = gts
 
         return frame, spectrogram, bboxes, file_id
 
@@ -247,107 +216,6 @@ class AudioVisualDataset(Dataset):
         return self.getitem(idx)
         # except Exception:
         #     return self.getitem(random.sample(range(len(self)), 1)[0])
-
-
-class AudioVisualDataset_org(Dataset):
-    def __init__(self, image_files, audio_files, image_path, audio_path, audio_dur=3., image_transform=None, audio_transform=None, all_bboxes=None, bbox_format='flickr'):
-        super().__init__()
-        self.audio_path = audio_path
-        self.image_path = image_path
-        self.audio_dur = audio_dur
-
-        self.audio_files = audio_files
-        self.image_files = image_files
-        self.all_bboxes = all_bboxes
-        self.bbox_format = bbox_format
-
-        self.image_transform = image_transform
-        self.audio_transform = audio_transform
-
-    def getitem(self, idx):
-        
-        # Image
-        if self.bbox_format == 'flickr':
-            mp4_path = self.image_path + self.image_files[idx] + '.mp4'
-            jpg = os.listdir(mp4_path)
-            jpg = [x for x in jpg if x[-3:]=='jpg'][0]
-            img_fn = os.path.join(mp4_path,jpg)
-            audio_fn = self.audio_path + self.audio_files[idx]+'.wav'
-            file_id = self.audio_files[idx]
-        else:
-        
-            file = self.image_files[idx]
-            file_id = file.split('.')[0]
-
-            # Image
-            img_fn = os.path.join(self.image_path, self.image_files[idx])
-
-            # Audio
-            audio_fn = os.path.join(self.audio_path, self.audio_files[idx])
-            
-        frame = self.image_transform(load_image(img_fn))
-        spectrogram = self.audio_transform(load_spectrogram(audio_fn))
-
-        bboxes = {}
-        if self.all_bboxes is not None:
-            bboxes['bboxes'] = self.all_bboxes[file_id]
-            bboxes['gt_map'] = bbox2gtmap(self.all_bboxes[file_id], self.bbox_format)
-
-        return frame, spectrogram, bboxes, file_id
-
-    def __len__(self):
-        return len(self.image_files)
-
-    def __getitem__(self, idx):
-        try:
-            return self.getitem(idx)
-        except Exception:
-            return self.getitem(random.sample(range(len(self)), 1)[0])
-
-
-def get_train_dataset(args):
-    audio_path = f"{args.train_data_path}/audio/"
-    image_path = f"{args.train_data_path}/frames/"
-
-    # List directory
-    audio_files = {fn.split('.wav')[0] for fn in os.listdir(audio_path) if fn.endswith('.wav')}
-    image_files = {fn.split('.jpg')[0] for fn in os.listdir(image_path) if fn.endswith('.jpg')}
-    avail_files = audio_files.intersection(image_files)
-    print(f"{len(avail_files)} available files")
-
-    # Subsample if specified
-    if args.trainset.lower() in {'vggss', 'flickr'}:
-        pass    # use full dataset
-    else:
-        subset = set(open(f"metadata/{args.trainset}.txt").read().splitlines())
-        avail_files = avail_files.intersection(subset)
-        print(f"{len(avail_files)} valid subset files")
-    avail_files = sorted(list(avail_files))
-    audio_files = sorted([dt+'.wav' for dt in avail_files])
-    image_files = sorted([dt+'.jpg' for dt in avail_files])
-
-    # Transforms
-    image_transform = transforms.Compose([
-        transforms.Resize(int(224 * 1.1), Image.BICUBIC),
-        transforms.RandomCrop((224, 224)),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                             std=[0.229, 0.224, 0.225])])
-    audio_transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.0], std=[12.0])])
-
-    return AudioVisualDataset(
-        image_files=image_files,
-        audio_files=audio_files,
-        image_path=image_path,
-        audio_path=audio_path,
-        audio_dur=3.,
-        image_transform=image_transform,
-        audio_transform=audio_transform
-    )
-
 
 def get_test_dataset(args):
     if args.testset == 'flickr':
@@ -515,11 +383,6 @@ def get_test_dataset_fnac(args):
                    'vpoms':'vpoms',
                    'vposs':'vposs'
                   }[args.testset]
-
-    
-    if args.random_audio:
-        testcsv = testcsv.replace('.json','_random.json')
-
 
     #  Retrieve list of audio and video files
 #     testset = set([item[0] for item in csv.reader(open(testcsv))])
