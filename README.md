@@ -12,7 +12,7 @@ Official PyTorch implementation of our following papers:
 >
 > [Arda Senocak*](https://ardasnck.github.io/), [Hyeonggon Ryu*](https://sites.google.com/view/hyeonggonryu), [Junsik Kim*](https://sites.google.com/site/jskimcv/), [Tae-Hyun Oh](https://ami.postech.ac.kr/members/tae-hyun-oh), [Hanspeter Pfister](https://vcg.seas.harvard.edu/people), [Joon Son Chung](https://mmai.io/joon/) (* Equal Contribution)
 >
->  (Minor Revision) TPAMI 2024
+>  TPAMI 2025
 
 ## Index
 - [Overview](#overview)
