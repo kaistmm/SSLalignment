@@ -8,7 +8,7 @@ Official PyTorch implementation of our following papers:
 >
 >  ICCV 2023
 
->  **[Toward Interactive Sound Source Localization: Better Align Sight and Sound!]([[https://ieeexplore.ieee.org/document/11016078]])**  
+>  **[Toward Interactive Sound Source Localization: Better Align Sight and Sound!](https://ieeexplore.ieee.org/document/11016078)**  
 >
 > [Arda Senocak*](https://ardasnck.github.io/), [Hyeonggon Ryu*](https://sites.google.com/view/hyeonggonryu), [Junsik Kim*](https://sites.google.com/site/jskimcv/), [Tae-Hyun Oh](https://ami.postech.ac.kr/members/tae-hyun-oh), [Hanspeter Pfister](https://vcg.seas.harvard.edu/people), [Joon Son Chung](https://mmai.io/joon/) (* Equal Contribution)
 >
