@@ -8,7 +8,7 @@ Official PyTorch implementation of our following papers:
 >
 >  ICCV 2023
 
->  **[Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment](https://arxiv.org/abs/2407.13676)**  
+>  **[Toward Interactive Sound Source Localization: Better Align Sight and Sound!]([[https://arxiv.org/abs/2407.13676](https://ieeexplore.ieee.org/document/11016078)](https://ieeexplore.ieee.org/document/11016078))**  
 >
 > [Arda Senocak*](https://ardasnck.github.io/), [Hyeonggon Ryu*](https://sites.google.com/view/hyeonggonryu), [Junsik Kim*](https://sites.google.com/site/jskimcv/), [Tae-Hyun Oh](https://ami.postech.ac.kr/members/tae-hyun-oh), [Hanspeter Pfister](https://vcg.seas.harvard.edu/people), [Joon Son Chung](https://mmai.io/joon/) (* Equal Contribution)
 >
@@ -119,10 +119,10 @@ If you find this code useful, please consider giving a star ⭐ and citing us:
 If you use this dataset, please consider giving a star ⭐ and citing us:
 
 ```bibtex
-@article{senocak2024align,
-  title={Aligning Sight and Sound: Advanced Sound Source Localization Through Audio-Visual Alignment},
+@article{senocak2025align,
   author={Senocak, Arda and Ryu, Hyeonggon and Kim, Junsik and Oh, Tae-Hyun and Pfister, Hanspeter and Chung, Joon Son},
-  journal={arXiv preprint arXiv:2407.13676},
-  year={2024}
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={Toward Interactive Sound Source Localization: Better Align Sight and Sound!}, 
+  year={2025},
 }
 ```
